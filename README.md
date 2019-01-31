@@ -20,6 +20,8 @@
 #### 发送消息
 ```
 String topicName = "testTopic";
+//groupName为空时，消息发送给topic下注册的所有消费者分组，
+//groupName不为空，消息只发送给对应的group分组
 String groupName = "testGroup";
 DefaultProducer defaultProducer = new DefaultProducer(topicName, groupName);
 for(int i=0;i<100000;i++) {
@@ -29,9 +31,11 @@ for(int i=0;i<100000;i++) {
 ```
 #### 处理消息
 ```
+//同一个分组无法重复消息同一条消息,依赖redis的list实现
 String topicName = "testTopic";
 String groupName = "testGroup";
-DefaultConsumer defaultConsumer = new DefaultConsumer(topicName, groupName);
+//可控制消费者线程数，默认单线程处理消息，可分布式部署多个节点处理消息
+DefaultConsumer defaultConsumer = new DefaultConsumer(topicName, groupName, 2);
 defaultConsumer.setMessageLinser(new MessageLinser() {
   @Override
   public MessageStatus consumeMessage(String message) {
