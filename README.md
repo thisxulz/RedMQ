@@ -17,6 +17,9 @@
 
 ### Example
 
+首先需要在线或者调用api注册topic和group，未注册的topic和group无法发送和接收消息
+支持P2P，Publish/Subscribe
+
 #### 发送消息
 ```
 String topicName = "testTopic";
