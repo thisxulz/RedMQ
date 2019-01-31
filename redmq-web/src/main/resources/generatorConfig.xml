@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry
+		location="/Users/user/tools/maven-3.2.5/maven-dependcies/mysql/mysql-connector-java/5.1.33/mysql-connector-java-5.1.33.jar" />
+	<context id="context1" targetRuntime="MyBatis3">
+    	<plugin type="com.zcool.mybatis.plugins.MySQLLimitPlugin"></plugin>
+    	
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://172.16.4.8:3306/zcooldiy?useUnicode=true&amp;characterEncoding=UTF-8"
+			userId="zcool" password="zcool" />
+		<javaModelGenerator targetPackage="com.zcool.web.dao.model"
+			targetProject="/Users/user/zcoolworkspace/spring-boot-web/src/main/java/" />
+		<sqlMapGenerator targetPackage="mappers"
+			targetProject="/Users/user/zcoolworkspace/spring-boot-web/src/main/resources" />
+		<javaClientGenerator targetPackage="com.zcool.web.dao.persistence"
+			targetProject="/Users/user/zcoolworkspace/spring-boot-web/src/main/java/" type="XMLMAPPER" />
+	
+		<table schema="zcooldiy" tableName="user_info" />
+	</context>
+</generatorConfiguration>
+
+<!-- 选择pom.xml文件，击右键先择Run AS——>Maven Build… ——>在Goals框中输入：mybatis-generator:generate -->

@@ -1,0 +1,32 @@
+<configuration>
+	<substitutionProperty name="log.base" value="/data/log/redmq" />
+	<substitutionProperty name="log.level" value="INFO" />
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{yyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="zcoolFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.base}/redmq.log</File>
+		<encoder>
+			<Pattern>%d{yyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%file:%line] %msg%n</Pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${log.base}/redmq-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>100</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+	
+	<root level="${log.level}">
+		<appender-ref ref="zcoolFile" />
+		<appender-ref ref="stdout" />
+	</root>
+ 
+</configuration>
