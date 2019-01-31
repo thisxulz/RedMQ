@@ -8,7 +8,6 @@ import com.redmq.client.consumer.MessageStatus;
 import com.redmq.client.consumer.service.ConsumerService;
 import com.redmq.client.log.ClientLog;
 import com.redmq.client.log.ClientLogFactory;
-import com.redmq.client.producer.DefaultProducer;
 import com.redmq.utils.constants.RedisConstants;
 import com.redmq.utils.redis.JedisClusterClient;
 

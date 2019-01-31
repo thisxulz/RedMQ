@@ -25,7 +25,7 @@ public class ConsumerServiceThread extends Thread{
 	
 	@Override
 	public void run() {
-		log.info("{}消费者线程启动...",this.getName());
+		log.info("消费者线程{}启动...",this.getName());
 		int count = 0;
 		JedisCluster jedis = JedisClusterClient.getJedis();
 		String lockKey = RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_THREAD_LOCK_PREFIX, consumerService.getDefaultConsumer().getTopicName(), consumerService.getDefaultConsumer().getGroupName());
@@ -34,7 +34,7 @@ public class ConsumerServiceThread extends Thread{
 		while(true) {
 			try {
 				if(jedis.exists(lockKey)) {//通过redis缓存锁安全关闭线程，保证队列的安全性和完整性
-					log.info("{}消费者线程安全关闭...",this.getName());
+					log.info("消费者线程{}安全关闭...",this.getName());
 					break;
 				}else {
 					// 加入心跳，监听线程	
@@ -50,7 +50,7 @@ public class ConsumerServiceThread extends Thread{
 				log.error(this.getName() + "消费者线程异常", e);
 			}
 		}
-		log.info("{}消费者线程安全结束...消费消息{}条",this.getName(),count);
+		log.info("消费者线程{}安全结束...消费消息{}条",this.getName(),count);
 	}
 	
 }

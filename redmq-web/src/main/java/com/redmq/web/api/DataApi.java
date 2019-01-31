@@ -16,6 +16,7 @@ import com.redmq.web.model.MsgListStatus;
 import com.redmq.web.model.ServiceResult;
 import com.redmq.web.service.DataService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
  * @author xulz
  * @date 2019年1月24日下午2:40:16
  */
-
+@Api(value = "DataApi", description = "查询相关接口")
 @RestController
 @RequestMapping(value="/api")
 public class DataApi {

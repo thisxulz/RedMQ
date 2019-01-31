@@ -28,7 +28,6 @@ public class DefaultConsumer {
 	
 	private MessageLinser messageLinser;
 	
-	//初始化
 	public DefaultConsumer(String topicName, String groupName, int threadNum) {
 		this.topicName = topicName;
 		this.groupName = groupName;
@@ -36,15 +35,20 @@ public class DefaultConsumer {
 		consumerService = new ConsumerServiceImpl(this);
 	}
 	
+	public DefaultConsumer(String topicName, String groupName) {
+		this.topicName = topicName;
+		this.groupName = groupName;
+		consumerService = new ConsumerServiceImpl(this);
+	}
+	
 	//启动。保证消息不重复，不丢失，但是不保存历史消息
 	public void start() {
-//		ExecutorService service = Executors.newFixedThreadPool(4);
-//		service.execute(command);
 		for(int i=0;i<this.threadNum;i++) {
 			ConsumerServiceThread thread = new ConsumerServiceThread(consumerService);
 			thread.setName("ConsumerServiceThread_" + i);
 			thread.start();
 		}
+		log.info("消息者线程启动已启动");
 	}
 
 	public String getTopicName() {

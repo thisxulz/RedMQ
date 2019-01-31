@@ -12,6 +12,7 @@ import com.redmq.web.model.HttpConstants;
 import com.redmq.web.model.ServiceResult;
 import com.redmq.web.service.DataRegService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -21,6 +22,7 @@ import io.swagger.annotations.ApiOperation;
  * @author xulz
  * @date 2019年1月24日下午5:55:06
  */
+@Api(value = "DataApi", description = "注册相关接口")
 @RestController
 @RequestMapping(value="/api")
 public class DataRegApi {

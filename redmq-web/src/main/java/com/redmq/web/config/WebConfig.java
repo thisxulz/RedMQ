@@ -14,6 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/statics/**").addResourceLocations("/WEB-INF/statics/");
+		registry.addResourceHandler("/*.html").addResourceLocations("/WEB-INF/api/");
+		registry.addResourceHandler("/webjars/**").addResourceLocations("/WEB-INF/api/webjars/");
 	}
 	
 	@Bean
