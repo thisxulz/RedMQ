@@ -11,6 +11,7 @@
 在线注册topic和group<br>
 提供restfulAPI<br>
 实时监控/报警<br>
+兼容单机和集群<br>
 
 ### 缺点：
 重度依赖redis<br>
