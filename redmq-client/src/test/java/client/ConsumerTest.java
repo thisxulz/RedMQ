@@ -20,7 +20,7 @@ public class ConsumerTest {
 	public static void main(String[] args) {
 		String topicName = "testTopic";
 		String groupName = "testGroup";
-		DefaultConsumer defaultConsumer = new DefaultConsumer(topicName, groupName, 10);
+		DefaultConsumer defaultConsumer = new DefaultConsumer(topicName, groupName, 1);
 		defaultConsumer.setMessageLinser(new MessageLinser() {
 			@Override
 			public MessageStatus consumeMessage(String message) {

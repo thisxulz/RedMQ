@@ -7,9 +7,8 @@ import com.redmq.client.consumer.service.impl.ProducerServiceImpl;
 import com.redmq.client.log.ClientLog;
 import com.redmq.client.log.ClientLogFactory;
 import com.redmq.utils.constants.RedisConstants;
-import com.redmq.utils.redis.JedisClusterClient;
-
-import redis.clients.jedis.JedisCluster;
+import com.redmq.utils.factory.RedisFactory;
+import com.redmq.utils.redis.RedisService;
 
 /**
  * @title 
@@ -27,6 +26,8 @@ public class DefaultProducer {
 	
 	private ProducerService producerService;
 	
+	private RedisService redisService;
+	
 	/**
 	 * 生产者，
 	 * @param topicName，消息主题
@@ -35,8 +36,9 @@ public class DefaultProducer {
 	public DefaultProducer(String topicName, String groupName) {
 		this.topicName = topicName;
 		this.groupName = groupName;
+		redisService = RedisFactory.getRedisService();
 		if(checkTopicAndGroup()) {
-			producerService = new ProducerServiceImpl(this);
+			producerService = new ProducerServiceImpl(this, redisService);
 		}
 	}
 	
@@ -50,12 +52,11 @@ public class DefaultProducer {
 	
 	public boolean checkTopicAndGroup() {
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
 			//是否注册的topic
-			boolean exists = jedis.sismember(RedisConstants.getKey(RedisConstants.REDIS_TOPIC), this.getTopicName());
+			boolean exists = redisService.sismember(RedisConstants.getKey(RedisConstants.REDIS_TOPIC), this.getTopicName());
 			if(exists) {//已注册
 				if(StringUtils.isNotBlank(this.getGroupName())) {//是否注册group
-					exists = jedis.sismember(RedisConstants.getKey(RedisConstants.REDIS_TOPIC_GROUPS_PREFIX, this.getTopicName()), this.getGroupName());
+					exists = redisService.sismember(RedisConstants.getKey(RedisConstants.REDIS_TOPIC_GROUPS_PREFIX, this.getTopicName()), this.getGroupName());
 				}
 			}
 			if(exists) return true; 

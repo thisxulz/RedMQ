@@ -9,11 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.redmq.utils.constants.RedisConstants;
-import com.redmq.utils.redis.JedisClusterClient;
+import com.redmq.utils.factory.RedisFactory;
+import com.redmq.utils.redis.RedisService;
 import com.redmq.web.model.MsgListStatus;
 import com.redmq.web.service.DataService;
-
-import redis.clients.jedis.JedisCluster;
 
 /**
  * @title 
@@ -28,11 +27,10 @@ public class DataServiceImpl implements DataService{
 	public Set<String> getAllTopics() {
 		Set<String> data = null;
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
-			data = jedis.smembers(RedisConstants.REDIS_TOPIC);
+			RedisService redisService = RedisFactory.getRedisService();
+			data = redisService.smembers(RedisConstants.REDIS_TOPIC);
 		}catch(Exception e) {
 			log.error("getAllTopics error", e);
-			JedisClusterClient.returnResource();
 		}
 		return data;
 	}
@@ -41,11 +39,10 @@ public class DataServiceImpl implements DataService{
 	public Set<String> getAllGroups() {
 		Set<String> data = null;
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
-			data = jedis.smembers(RedisConstants.REDIS_GROUP);
+			RedisService redisService = RedisFactory.getRedisService();
+			data = redisService.smembers(RedisConstants.REDIS_GROUP);
 		}catch(Exception e) {
 			log.error("getAllTopics error", e);
-			JedisClusterClient.returnResource();
 		}
 		return data;
 	}
@@ -54,11 +51,10 @@ public class DataServiceImpl implements DataService{
 	public Set<String> getTopicGroups(String topic) {
 		Set<String> data = null;
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
-			data = jedis.smembers(RedisConstants.getKey(RedisConstants.REDIS_TOPIC_GROUPS_PREFIX, topic));
+			RedisService redisService = RedisFactory.getRedisService();
+			data = redisService.smembers(RedisConstants.getKey(RedisConstants.REDIS_TOPIC_GROUPS_PREFIX, topic));
 		}catch(Exception e) {
 			log.error("getTopicGroups error", e);
-			JedisClusterClient.returnResource();
 		}
 		return data;
 	}
@@ -67,11 +63,10 @@ public class DataServiceImpl implements DataService{
 	public Set<String> getGroupTopics(String group) {
 		Set<String> data = null;
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
-			data = jedis.smembers(RedisConstants.getKey(RedisConstants.REDIS_GROUP_TOPICS_PREFIX, group));
+			RedisService redisService = RedisFactory.getRedisService();
+			data = redisService.smembers(RedisConstants.getKey(RedisConstants.REDIS_GROUP_TOPICS_PREFIX, group));
 		}catch(Exception e) {
 			log.error("getGroupTopics error", e);
-			JedisClusterClient.returnResource();
 		}
 		return data;
 	}
@@ -80,17 +75,16 @@ public class DataServiceImpl implements DataService{
 	public MsgListStatus getMsgList(String topic, String group) {
 		MsgListStatus msgListStatus = new MsgListStatus();
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
-			long leftMsg = jedis.llen(RedisConstants.getKey(RedisConstants.REDIS_MESSAGE_PREFIX, topic, group));
+			RedisService redisService = RedisFactory.getRedisService();
+			long leftMsg = redisService.llen(RedisConstants.getKey(RedisConstants.REDIS_MESSAGE_PREFIX, topic, group));
 			long time = System.currentTimeMillis();
-			long leftThread = jedis.zcount(RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_HEART_PREFIX, topic, group), time - 10000, time + 10000);
+			long leftThread = redisService.zcount(RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_HEART_PREFIX, topic, group), time - 10000, time + 10000);
 			msgListStatus.setLeftMsg(leftMsg);
 			msgListStatus.setLeftThread(leftThread);
 			msgListStatus.setGroup(group);
 			msgListStatus.setTopic(topic);
 		}catch(Exception e) {
 			log.error("getMsgList error", e);
-			JedisClusterClient.returnResource();
 		}
 		return msgListStatus;
 	}
@@ -113,7 +107,6 @@ public class DataServiceImpl implements DataService{
 			}
 		}catch(Exception e) {
 			log.error("getMsgList error", e);
-			JedisClusterClient.returnResource();
 		}
 		return list;
 	}
@@ -122,18 +115,17 @@ public class DataServiceImpl implements DataService{
 	public int changeConsumerStatus(String topic, String group, int status) {
 		int result = 0;
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
+			RedisService redisService = RedisFactory.getRedisService();
 			String key = RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_THREAD_LOCK_PREFIX, topic, group);
 			if(status == 0) {//关闭
-				jedis.set(key, "1");
+				redisService.set(key, "1");
 				result = 1;
 			}else if(status == 1) {//开启
-				jedis.del(key);
+				redisService.del(key);
 				result = 1;
 			}
 		}catch(Exception e) {
 			log.error("getMsgList error", e);
-			JedisClusterClient.returnResource();
 			result = -1;
 		}
 		return result;

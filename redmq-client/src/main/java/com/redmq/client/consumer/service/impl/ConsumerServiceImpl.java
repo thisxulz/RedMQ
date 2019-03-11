@@ -9,9 +9,7 @@ import com.redmq.client.consumer.service.ConsumerService;
 import com.redmq.client.log.ClientLog;
 import com.redmq.client.log.ClientLogFactory;
 import com.redmq.utils.constants.RedisConstants;
-import com.redmq.utils.redis.JedisClusterClient;
-
-import redis.clients.jedis.JedisCluster;
+import com.redmq.utils.redis.RedisService;
 
 /**
  * @title 
@@ -23,8 +21,11 @@ public class ConsumerServiceImpl implements ConsumerService{
 	
 	private DefaultConsumer defaultConsumer;
 	
-	public ConsumerServiceImpl(DefaultConsumer defaultConsumer) {
+	private RedisService redisService;
+	
+	public ConsumerServiceImpl(DefaultConsumer defaultConsumer, RedisService redisService) {
 		this.defaultConsumer = defaultConsumer;
+		this.redisService = redisService;
 	}
 
 	@Override
@@ -32,9 +33,8 @@ public class ConsumerServiceImpl implements ConsumerService{
 		ConsumeMessageResult result = new ConsumeMessageResult();
 		try {
 			//redis队列中获取数据
-			JedisCluster jedis = JedisClusterClient.getJedis();
 			String key = RedisConstants.getKey(RedisConstants.REDIS_MESSAGE_PREFIX, defaultConsumer.getTopicName(), defaultConsumer.getGroupName());
-			String message = jedis.lpop(key);
+			String message = redisService.lpop(key);
 			if(StringUtils.isNotBlank(message)) {
 				//处理消息
 				MessageStatus messageStatus = defaultConsumer.getMessageLinser().consumeMessage(message);
@@ -46,7 +46,7 @@ public class ConsumerServiceImpl implements ConsumerService{
 					case ERROR :
 						result.setSuccess(false);
 						//处理失败放回队列中
-						jedis.rpush(key, message);
+						redisService.rpush(key, message);
 						break;
 					default:
 		                break;
@@ -67,5 +67,9 @@ public class ConsumerServiceImpl implements ConsumerService{
 	@Override
 	public DefaultConsumer getDefaultConsumer() {
 		return this.defaultConsumer;
+	}
+	
+	public void setRedisService(RedisService redisService) {
+		this.redisService = redisService;
 	}
 }

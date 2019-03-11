@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.redmq.utils.constants.RedisConstants;
-import com.redmq.utils.redis.JedisClusterClient;
+import com.redmq.utils.factory.RedisFactory;
+import com.redmq.utils.redis.RedisService;
 import com.redmq.web.service.DataRegService;
-
-import redis.clients.jedis.JedisCluster;
 
 /**
  * @title 
@@ -23,11 +22,11 @@ public class DataRegServiceImpl implements DataRegService{
 	public int regTopic(String topic) {
 		int result = 0;
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
-			if(jedis.sismember(RedisConstants.REDIS_TOPIC, topic)) {//判断主题是否存在
+			RedisService redisService = RedisFactory.getRedisService();
+			if(redisService.sismember(RedisConstants.REDIS_TOPIC, topic)) {//判断主题是否存在
 				result = 2;
 			}else {
-				jedis.sadd(RedisConstants.REDIS_TOPIC, topic);
+				redisService.sadd(RedisConstants.REDIS_TOPIC, topic);
 				result = 1;
 			}
 		}catch(Exception e) {
@@ -41,11 +40,11 @@ public class DataRegServiceImpl implements DataRegService{
 	public int regGroup(String topic, String group) {
 		int result = 0;
 		try {
-			JedisCluster jedis = JedisClusterClient.getJedis();
-			if(jedis.sismember(RedisConstants.REDIS_TOPIC, topic)) {//判断主题是否存在
-				jedis.sadd(RedisConstants.getKey(RedisConstants.REDIS_TOPIC_GROUPS_PREFIX, topic), group);
-				jedis.sadd(RedisConstants.getKey(RedisConstants.REDIS_GROUP_TOPICS_PREFIX, group), topic);
-				jedis.sadd(RedisConstants.REDIS_GROUP, group);
+			RedisService redisService = RedisFactory.getRedisService();
+			if(redisService.sismember(RedisConstants.REDIS_TOPIC, topic)) {//判断主题是否存在
+				redisService.sadd(RedisConstants.getKey(RedisConstants.REDIS_TOPIC_GROUPS_PREFIX, topic), group);
+				redisService.sadd(RedisConstants.getKey(RedisConstants.REDIS_GROUP_TOPICS_PREFIX, group), topic);
+				redisService.sadd(RedisConstants.REDIS_GROUP, group);
 				result = 1;
 			}else {
 				result = 2;

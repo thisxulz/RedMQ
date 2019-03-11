@@ -29,7 +29,7 @@ public class JedisClusterClient {
 	
 	private static Configuration config = null;
 	
-	private static final String fileName = "redis_cluster.properties";
+	private static final String fileName = "redmq.properties";
 	
 //	private static final String fileName = "E:\\zcoolworkspace\\zcool\\zcool-web\\src\\main\\resources\\redis_cluster.properties";
 	
@@ -51,13 +51,13 @@ public class JedisClusterClient {
 				config = new PropertiesConfiguration(fileName);
 			}
 			
-			int timeout = config.getInt("timeout");
-			int maxRedirections = config.getInt("maxRedirections");
-			int maxTotal = config.getInt("maxTotal");
-			int maxIdle = config.getInt("maxIdle");
-			int maxWait = config.getInt("maxWait");
+			int timeout = config.getInt("redis.timeout");
+			int maxRedirections = config.getInt("redis.maxRedirections");
+			int maxTotal = config.getInt("redis.maxTotal");
+			int maxIdle = config.getInt("redis.maxIdle");
+			int maxWait = config.getInt("redis.maxWait");
 			
-			String[] servers = config.getString("server").split(";");
+			String[] servers = config.getString("redis.cluster.server").split(";");
 
 			JedisPoolConfig poolConfig = new JedisPoolConfig();
 			poolConfig.setMaxTotal(maxTotal);

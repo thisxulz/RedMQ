@@ -16,7 +16,7 @@ public class ProducerTest {
 		String topicName = "testTopic";
 		String groupName = "testGroup";
 		DefaultProducer defaultProducer = new DefaultProducer(topicName, groupName);
-		for(int i=0;i<100000;i++) {
+		for(int i=0;i<1000;i++) {
 			String message = "i am message " + i;
 			defaultProducer.sendMessage(message);
 		}

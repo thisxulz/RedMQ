@@ -5,9 +5,7 @@ import com.redmq.client.consumer.service.ConsumerService;
 import com.redmq.client.log.ClientLog;
 import com.redmq.client.log.ClientLogFactory;
 import com.redmq.utils.constants.RedisConstants;
-import com.redmq.utils.redis.JedisClusterClient;
-
-import redis.clients.jedis.JedisCluster;
+import com.redmq.utils.redis.RedisService;
 
 /**
  * @title 
@@ -19,26 +17,25 @@ public class ConsumerServiceThread extends Thread{
 	
 	private ConsumerService consumerService;
 	
-	public ConsumerServiceThread(ConsumerService consumerService) {
-		this.consumerService = consumerService;
-	}
+	private RedisService redisService;
+	
+	public ConsumerServiceThread() {}
 	
 	@Override
 	public void run() {
 		log.info("消费者线程{}启动...",this.getName());
 		int count = 0;
-		JedisCluster jedis = JedisClusterClient.getJedis();
 		String lockKey = RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_THREAD_LOCK_PREFIX, consumerService.getDefaultConsumer().getTopicName(), consumerService.getDefaultConsumer().getGroupName());
 		String heartKey = RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_HEART_PREFIX, consumerService.getDefaultConsumer().getTopicName(), consumerService.getDefaultConsumer().getGroupName());
-		jedis.del(lockKey);//重启时删除key
+		redisService.del(lockKey);//重启时删除key
 		while(true) {
 			try {
-				if(jedis.exists(lockKey)) {//通过redis缓存锁安全关闭线程，保证队列的安全性和完整性
+				if(redisService.exists(lockKey)) {//通过redis缓存锁安全关闭线程，保证队列的安全性和完整性
 					log.info("消费者线程{}安全关闭...",this.getName());
 					break;
 				}else {
 					// 加入心跳，监听线程	
-					jedis.zadd(heartKey, System.currentTimeMillis(), this.getName());
+					redisService.zadd(heartKey, System.currentTimeMillis(), this.getName());
 					ConsumeMessageResult result = consumerService.dealMessage();
 					// 消费消息结果处理
 					if(!result.isSuccess()) {//消费成功、失败、没有更多消息
@@ -53,4 +50,11 @@ public class ConsumerServiceThread extends Thread{
 		log.info("消费者线程{}安全结束...消费消息{}条",this.getName(),count);
 	}
 	
+	public void setRedisService(RedisService redisService) {
+		this.redisService = redisService;
+	}
+	
+	public void setConsumerService(ConsumerService consumerService) {
+		this.consumerService = consumerService;
+	}
 }
