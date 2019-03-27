@@ -2,7 +2,7 @@ package client;
 
 import org.junit.Test;
 
-import com.redmq.client.producer.DefaultProducer;
+import com.github.redmq.client.producer.DefaultProducer;
 
 /**
  * @title 

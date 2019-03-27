@@ -2,9 +2,9 @@ package client;
 
 import org.junit.Test;
 
-import com.redmq.client.consumer.DefaultConsumer;
-import com.redmq.client.consumer.MessageStatus;
-import com.redmq.client.consumer.service.MessageLinser;
+import com.github.redmq.client.consumer.DefaultConsumer;
+import com.github.redmq.client.consumer.MessageStatus;
+import com.github.redmq.client.consumer.service.MessageLinser;
 
 /**
  * @title 
