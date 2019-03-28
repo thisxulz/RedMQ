@@ -1,10 +1,9 @@
 package client;
 
-import org.junit.Test;
 
-import com.github.redmq.client.consumer.DefaultConsumer;
-import com.github.redmq.client.consumer.MessageStatus;
-import com.github.redmq.client.consumer.service.MessageLinser;
+import com.github.thisxulz.redmq.client.consumer.DefaultConsumer;
+import com.github.thisxulz.redmq.client.consumer.MessageStatus;
+import com.github.thisxulz.redmq.client.consumer.service.MessageLinser;
 
 /**
  * @title 
@@ -12,10 +11,6 @@ import com.github.redmq.client.consumer.service.MessageLinser;
  * @date 2019年1月18日下午5:38:08
  */
 public class ConsumerTest {
-	
-	@Test
-	public void test() {
-	}
 	
 	public static void main(String[] args) {
 		String topicName = "testTopic";

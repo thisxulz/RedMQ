@@ -1,8 +1,7 @@
 package client;
 
-import org.junit.Test;
 
-import com.github.redmq.client.producer.DefaultProducer;
+import com.github.thisxulz.redmq.client.producer.DefaultProducer;
 
 /**
  * @title 
@@ -11,8 +10,7 @@ import com.github.redmq.client.producer.DefaultProducer;
  */
 public class ProducerTest {
 	
-	@Test
-	public void test() {
+	public static void main(String[] args) {
 		String topicName = "testTopic";
 		String groupName = "testGroup";
 		DefaultProducer defaultProducer = new DefaultProducer(topicName, groupName);
