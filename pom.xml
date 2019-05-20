@@ -3,10 +3,25 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.thisxulz</groupId>
 	<artifactId>redmq</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>redmq</name>
 	<description>redmq</description>
 	<packaging>pom</packaging>
+	<url>https://github.com/thisxulz/RedMQ</url>
+	
+	 <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    
+	<licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 	
 	<scm>
         <url>https://github.com/thisxulz/RedMQ</url>
@@ -98,11 +113,11 @@
 	
 	<distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
+            <id>thisxulz-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
+            <id>thisxulz-release</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>

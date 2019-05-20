@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.github.thisxulz</groupId>
 		<artifactId>redmq</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<groupId>com.github.thisxulz</groupId>
 	<artifactId>redmq-utils</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>redmq-utils</name>
 	
 
@@ -72,11 +72,11 @@
 	</build>
 	<distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
+            <id>thisxulz-snapshots</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
+            <id>thisxulz-release</id>
             <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
