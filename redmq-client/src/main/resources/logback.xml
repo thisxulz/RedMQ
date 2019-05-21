@@ -12,11 +12,11 @@
 	<appender name="zcoolFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<File>${log.base}/redmq.log</File>
 		<encoder>
-			<Pattern>%d{yyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%file:%line] %msg%n</Pattern>
+			<Pattern>%d{yyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} [%file:%line] - %msg%n</Pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
-			<fileNamePattern>${log.base}/redmq-%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${log.base}/redmq-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
 			<maxHistory>100</maxHistory>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 				<maxFileSize>100MB</maxFileSize>
