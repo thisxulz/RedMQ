@@ -10,8 +10,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({"com.redmq.web"})
-@ServletComponentScan(value = {"com.redmq.web.filter"})
+@ComponentScan({"com.github.thisxulz.redmq.web"})
+@ServletComponentScan(value = {"com.github.thisxulz.redmq.web.filter"})
 public class TomcatApplication extends SpringBootServletInitializer{
 	private static final Logger log = LoggerFactory.getLogger(TomcatApplication.class);
 
