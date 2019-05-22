@@ -4,9 +4,9 @@
 ### maven配置:
 ```
 <dependency>
-			<groupId>com.github.thisxulz</groupId>
-			<artifactId>redmq-client</artifactId>
-			<version>0.0.2</version>
+	<groupId>com.github.thisxulz</groupId>
+	<artifactId>redmq-client</artifactId>
+	<version>0.0.2</version>
 </dependency>
 ```
 
