@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.github.thisxulz</groupId>
 		<artifactId>redmq</artifactId>
-		<version>0.0.2</version>
+		<version>0.0.3</version>
 	</parent>
 	<groupId>com.github.thisxulz</groupId>
 	<artifactId>redmq-web</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<packaging>war</packaging>
 	<name>redmq-web Maven Webapp</name>
 	<url>http://maven.apache.org</url>
@@ -101,7 +101,7 @@
 		<dependency>
 			<groupId>com.github.thisxulz</groupId>
 			<artifactId>redmq-utils</artifactId>
-			<version>0.0.2</version>
+			<version>0.0.3</version>
 		</dependency>
 	</dependencies>
 
