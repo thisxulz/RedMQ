@@ -2,11 +2,13 @@
 基于redis的消息队列
 
 ### maven配置:
+```
 <dependency>
 			<groupId>com.github.thisxulz</groupId>
 			<artifactId>redmq-client</artifactId>
 			<version>0.0.2</version>
 </dependency>
+```
 
 ### 优点：
 消息不丢失<br>
@@ -63,12 +65,12 @@ http://localhost:8000/doc.html <br>
 ### 在线管理地址
 http://localhost:8000/msgs <br>
 
-在线管理 clone 代码到本地
-修改 redmq-web 的配置文件 redmq.properties，配置redis单机或集群地址
-根目录执行命令 mvn clean package
-cd redmq-web
-java -jar target/redmq-web.war
-即可访问
+在线管理 clone 代码到本地<br>
+修改 redmq-web 的配置文件 redmq.properties，配置redis单机或集群地址<br>
+根目录执行命令 mvn clean package<br>
+cd redmq-web<br>
+java -jar target/redmq-web.war<br>
+即可访问<br>
 
 查看消息队列，安全关闭消费者分组<br>
 ![](https://img.zcool.cn/zcool-diy/ibebfaed20dfd80e2b9638951e2030ba21.png@500w_500h_1e)
