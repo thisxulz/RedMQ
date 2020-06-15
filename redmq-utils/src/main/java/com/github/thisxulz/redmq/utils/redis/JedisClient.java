@@ -4,12 +4,14 @@ import java.io.File;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.Protocol;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 
 public class JedisClient {
@@ -54,7 +56,7 @@ public class JedisClient {
 			int maxIdle = config.getInt("redis.maxIdle");
 			int maxWait = config.getInt("redis.maxWait");
 			int timeout = config.getInt("redis.timeout");
-
+			
 			String server = config.getString("redis.server").split(":")[0];
 			String port = config.getString("redis.server").split(":")[1];
 
@@ -63,7 +65,14 @@ public class JedisClient {
 			poolConfig.setMaxTotal(maxTotal);
 			poolConfig.setMaxWaitMillis(maxWait);
 
-			pool = new JedisPool(poolConfig, server, Integer.valueOf(port), timeout);
+			String requirepass = config.getString("redis.requirepass");
+
+			if(StringUtils.isBlank(requirepass)){
+				pool = new JedisPool(poolConfig, server, Integer.valueOf(port), timeout, null, Protocol.DEFAULT_DATABASE);
+			}else{
+				pool = new JedisPool(poolConfig, server, Integer.valueOf(port), timeout, requirepass, Protocol.DEFAULT_DATABASE);
+			}
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
