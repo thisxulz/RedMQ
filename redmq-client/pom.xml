@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.github.thisxulz</groupId>
 		<artifactId>redmq</artifactId>
-		<version>0.0.4</version>
+		<version>0.0.5</version>
 	</parent>
 	<groupId>com.github.thisxulz</groupId>
 	<artifactId>redmq-client</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.5</version>
 	<name>redmq-client</name>
 	<url>http://maven.apache.org</url>
 	<properties>
@@ -26,7 +26,7 @@
 		<dependency>
 			<groupId>com.github.thisxulz</groupId>
 			<artifactId>redmq-utils</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.5</version>
 		</dependency>
 	</dependencies>
 	
