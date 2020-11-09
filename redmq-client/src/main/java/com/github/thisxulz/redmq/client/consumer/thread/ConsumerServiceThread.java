@@ -24,7 +24,7 @@ public class ConsumerServiceThread extends Thread{
 	@Override
 	public void run() {
 		log.info("消费者线程{}启动...",this.getName());
-		int count = 0;
+		long count = 0;
 		String lockKey = RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_THREAD_LOCK_PREFIX, consumerService.getDefaultConsumer().getTopicName(), consumerService.getDefaultConsumer().getGroupName());
 		String heartKey = RedisConstants.getKey(RedisConstants.REDIS_CONSUMER_HEART_PREFIX, consumerService.getDefaultConsumer().getTopicName(), consumerService.getDefaultConsumer().getGroupName());
 		redisService.del(lockKey);//重启时删除key
@@ -40,8 +40,13 @@ public class ConsumerServiceThread extends Thread{
 					// 消费消息结果处理
 					if(!result.isSuccess()) {//消费成功、失败、没有更多消息
 						sleep(3000);
+					}else {
+						count++;
+						if(count >= 100000000) {
+							log.info("消费者线程{}重置，已消费消息{}条",this.getName(),count);
+							count = 0;
+						}
 					}
-					count++;
 				}
 			}catch(Exception e) {
 				log.error(this.getName() + "消费者线程异常", e);
