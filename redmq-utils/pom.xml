@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.github.thisxulz</groupId>
 		<artifactId>redmq</artifactId>
-		<version>0.0.5</version>
+		<version>0.0.7</version>
 	</parent>
 	<groupId>com.github.thisxulz</groupId>
 	<artifactId>redmq-utils</artifactId>
-	<version>0.0.5</version>
+	<version>0.0.7</version>
 	<name>redmq-utils</name>
 	
 
